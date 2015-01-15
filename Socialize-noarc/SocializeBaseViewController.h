@@ -89,6 +89,8 @@
     if (PROPERTY ## _ == nil) { \
         UIButton *button = [UIButton redSocializeNavBarButtonWithTitle: TITLESTR ]; \
         [button addTarget:self action:@selector(PROPERTY ## Pressed:) forControlEvents:UIControlEventTouchUpInside]; \
+        [[button titleLabel] setFont:[UIFont fontWithName:@"Lato-Bold" size:14.0]]; \
+        [button setContentEdgeInsets:UIEdgeInsetsMake(0.0, -20.0, 0.0, 0.0)]; \
         PROPERTY ## _ = [[UIBarButtonItem alloc] initWithCustomView:button]; \
     } \
     return PROPERTY ## _; \
@@ -100,6 +102,8 @@
     if (PROPERTY ## _ == nil) { \
         UIButton *button = [UIButton blueSocializeNavBarButtonWithTitle: TITLESTR ]; \
         [button addTarget:self action:@selector(PROPERTY ## Pressed:) forControlEvents:UIControlEventTouchUpInside]; \
+        [[button titleLabel] setFont:[UIFont fontWithName:@"Lato-Bold" size:14.0]]; \
+        [button setContentEdgeInsets:UIEdgeInsetsMake(0.0, 20.0, 0.0, 0.0)]; \
         PROPERTY ## _ = [[UIBarButtonItem alloc] initWithCustomView:button]; \
     } \
     return PROPERTY ## _; \

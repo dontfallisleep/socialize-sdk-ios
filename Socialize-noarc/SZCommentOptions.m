@@ -12,7 +12,12 @@
 @synthesize dontSubscribeToNotifications = dontSubscribeToNotifications_;
 
 + (SZCommentOptions*)defaultOptions {
-    return [[self alloc] init];
+    static SZCommentOptions *sharedDefaultOptions = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedDefaultOptions = [[self alloc] init];
+    });
+    return sharedDefaultOptions;
 }
 
 @end

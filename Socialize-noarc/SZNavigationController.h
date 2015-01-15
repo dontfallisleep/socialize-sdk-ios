@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface SZNavigationController : UINavigationController
++ (void)initNavigationBar:(UINavigationController *)controller;
 
 @end

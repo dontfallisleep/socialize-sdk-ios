@@ -8,6 +8,7 @@
 
 #import "SZNavigationControllerIOS6.h"
 #import "UINavigationBarBackground.h"
+#import "SZDisplayOptions.h"
 
 @implementation SZNavigationControllerIOS6
 
@@ -21,7 +22,13 @@
 
 //available to other subclasses of SZNavigationController
 + (void)initNavigationBar:(UINavigationController *)controller {
-    UIImage * socializeNavBarBackground = [UIImage imageNamed:@"socialize-navbar-bg.png"];
+    UIImage * socializeNavBarBackground;
+    if ([[SZDisplayOptions defaultOptions] navBarBGImageName] != nil) {
+        socializeNavBarBackground = [UIImage imageNamed:[[SZDisplayOptions defaultOptions] navBarBGImageName]];
+    }
+    else {
+        socializeNavBarBackground = [UIImage imageNamed:@"socialize-navbar-bg.png"];
+    }
     [controller.navigationBar setBackgroundImage:socializeNavBarBackground];
 }
 

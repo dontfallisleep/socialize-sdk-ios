@@ -649,6 +649,43 @@ otherwise you will get a failure.
 /** @name Comment stuff */
 
 /**
+ Fetch like by like id.
+ 
+ Successful call of this method invokes <[SocializeServiceDelegate service:didFetchElements:]> method.
+ In case of error it will be called <[SocializeServiceDelegate service:didFail:]> method.
+ 
+ @param likeId Unique id of like object
+ */
+-(void)getLikeById: (int) likeId;
+
+/**
+ Fetch list of likes.
+ 
+ Successful call of this method invokes <[SocializeServiceDelegate service:didFetchElements:]> method.
+ In case of error it will be called <[SocializeServiceDelegate service:didFail:]> method.
+ 
+ Parameters first and last (OPTIONAL) : specify range to do pagination by entity's key. First is included, and last is excluded.
+ 
+ Default values:
+ first = 0
+ last = 100
+ 
+ @warning *Note:*
+ Each request is limited to 100 items.
+ If first = 0, last = 50, the API returns likes 0-49.
+ If last - first > 100, then last is truncated to equal first + 100. For example, if first = 100, last = 250, then last is changed to last = 200.
+ If only last = 150 is passed, then last is truncated to 100. If last = 25, then results 0...24 are returned.
+ 
+ @param entryKey URL to the entity.
+ @param first First like. Could be nil. (OPTIONAL)
+ @param last Last like. Could be nil. (OPTIONAL)
+ */
+-(void)getLikeList: (NSString*) entryKey first:(NSNumber*)first last:(NSNumber*)last;
+
+- (void)getLikesWithEntityKey:(NSString*)entityKey success:(void(^)(NSArray *likes))success failure:(void(^)(NSError *error))failure;
+
+
+/**
  Fetch comment by comment id.
  
  Successful call of this method invokes <[SocializeServiceDelegate service:didFetchElements:]> method.

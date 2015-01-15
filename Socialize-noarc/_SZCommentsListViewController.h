@@ -14,6 +14,7 @@
 #import "_SZComposeCommentViewController.h"
 
 @class CommentsTableFooterView;
+@class CommentsTableHeaderView;
 @class SocializeTableBGInfoView;
 @class ImagesCache;
 @class SocializeBubbleView;
@@ -45,10 +46,12 @@
 	NSDateFormatter*    _commentDateFormatter;
 
 	CommentsTableFooterView*      footerView;
+    CommentsTableHeaderView*      headerView;
     CommentsTableViewCell*        commentsCell;
     
     SocializeEntity*              _entity;
     ImagesCache*                  _cache;
+    BOOL                          likesOn;
 }
 
 @property (retain, nonatomic) IBOutlet UIImageView	*brushedMetalBackground;
@@ -60,6 +63,7 @@
 
 @property (nonatomic, assign) IBOutlet CommentsTableViewCell     *commentsCell;
 @property (retain, nonatomic) IBOutlet CommentsTableFooterView   *footerView;
+@property (retain, nonatomic) IBOutlet CommentsTableHeaderView   *headerView;
 @property (retain, nonatomic) ImagesCache               *cache;
 @property (assign, nonatomic) BOOL                      isLoading;
 
@@ -80,6 +84,10 @@
 
 -(IBAction)addCommentButtonPressed:(id)sender;
 
+-(IBAction)likeButtonPressed:(id)sender;
+
+-(IBAction)commentsLikeSelectorPressed:(id)sender;
+
 
 -(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil entryUrlString:(NSString*) entryUrlString;
 
@@ -87,6 +95,7 @@
 
 - (id)initWithEntity:(id<SZEntity>)entity;
 
+- (void)loadContentForNextPageAtOffset:(NSInteger)offset;
 @end
 
 

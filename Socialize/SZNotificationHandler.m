@@ -144,6 +144,11 @@ static SZNotificationHandler *sharedNotificationHandler;
     
     return [self openSocializeNotification:userInfo];
 }
+-(void)leftNavigationButtonPressed:(id)sender {
+    //default implementation for the left navigation button
+    [self dismissViewControllerInDisplay:self.activeOuterDisplay];
+    
+}
 
 - (BOOL)openSocializeNotification:(NSDictionary*)userInfo {
     
@@ -223,6 +228,12 @@ static SZNotificationHandler *sharedNotificationHandler;
                 commentsList._commentsListViewController.showNotificationHintOnAppear = YES;
 
                 SocializeActivityDetailsViewController *details = [[SocializeActivityDetailsViewController alloc] initWithActivity:comment];
+                details.navigationItem.leftBarButtonItem = [details createLeftNavigationButtonWithCaption:@"Back"];
+                //UIButton *backButton = [UIButton blueSocializeNavBarBackButtonWithTitle:@"Back"];
+                //[backButton addTarget:self action:details leftNavigationButtonPressed] forControlEvents:UIControlEventTouchUpInside];
+                //UIBarButtonItem * backLeftItem = [[UIBarButtonItem alloc]initWithCustomView:backButton];
+                //details.navigationItem.leftBarButtonItem = backLeftItem;
+                
                 [commentsList pushViewController:details animated:YES];
                 
                 

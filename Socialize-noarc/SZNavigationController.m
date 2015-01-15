@@ -9,6 +9,7 @@
 #import "UIDevice+VersionCheck.h"
 #import "SZNavigationController.h"
 #import "SZNavigationControllerIOS6.h"
+#import "SZDisplayOptions.h"
 
 @interface SZNavigationController ()
 
@@ -25,5 +26,20 @@
         return [super alloc];
     }
 }
+
+- (id)init {
+    if (self = [super init]) {
+        [SZNavigationController initNavigationBar:self];
+    }
+    
+    return self;
+}
++ (void)initNavigationBar:(UINavigationController *)controller {
+    if ([[SZDisplayOptions defaultOptions] navBarBGImageName] != nil) {
+        UIImage * socializeNavBarBackground = [UIImage imageNamed:[[SZDisplayOptions defaultOptions] navBarBGImageName]];
+        [controller.navigationBar setBackgroundImage:socializeNavBarBackground];
+    }
+}
+
 
 @end

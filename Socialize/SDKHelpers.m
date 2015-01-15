@@ -26,6 +26,8 @@
 #import "SZSelectNetworkViewController.h"
 #import "SZLocationUtils.h"
 #import "socialize_globals.h"
+#import "UIDevice+VersionCheck.h"
+#import "SZDisplayOptions.h"
 
 #define SHARE_COMMENT_COMPLETE_TEXT @"Post"
 #define SHARE_COMMENT_TITLE @"Share Comment"
@@ -116,9 +118,28 @@ void SZLinkAndGetPreferredNetworks(UIViewController *viewController, SZLinkConte
                         selectNetwork.title = SHARE_COMMENT_TITLE;
                         selectNetwork.continueText = SHARE_COMMENT_COMPLETE_TEXT;
                         break;
+                        
                     case SZLinkContextLike:
-                        selectNetwork.title = SHARE_LIKE_TITLE;
-                        selectNetwork.continueText = SHARE_LIKE_COMPLETE_TEXT;
+                        
+                    {
+                        
+                        NSString *shareLikeCustomText = [[SZDisplayOptions defaultOptions] shareLikeCustomText];
+                        
+                        if (shareLikeCustomText != nil && ![shareLikeCustomText isEqualToString:@""]) {
+                            selectNetwork.title = shareLikeCustomText;
+                        }
+                        else {
+                            selectNetwork.title = SHARE_LIKE_TITLE;
+                        }
+                        NSString *likeCustomText = [[SZDisplayOptions defaultOptions] likeCustomText];
+                        if (likeCustomText != nil && ![likeCustomText isEqualToString:@""]) {
+                            selectNetwork.continueText = likeCustomText;
+                        }
+                        else {
+                            selectNetwork.continueText = SHARE_LIKE_COMPLETE_TEXT;
+
+                        }
+                    }
                         break;
                 }
                 
@@ -169,8 +190,26 @@ void SZLinkAndGetPreferredNetworks(UIViewController *viewController, SZLinkConte
                     selectNetwork.continueText = SHARE_COMMENT_COMPLETE_TEXT;
                     break;
                 case SZLinkContextLike:
-                    selectNetwork.title = SHARE_LIKE_TITLE;
-                    selectNetwork.continueText = SHARE_LIKE_COMPLETE_TEXT;
+                    
+                {
+                    
+                    NSString *shareLikeCustomText = [[SZDisplayOptions defaultOptions] shareLikeCustomText];
+                    
+                    if (shareLikeCustomText != nil && ![shareLikeCustomText isEqualToString:@""]) {
+                        selectNetwork.title = shareLikeCustomText;
+                    }
+                    else {
+                        selectNetwork.title = SHARE_LIKE_TITLE;
+                    }
+                    NSString *likeCustomText = [[SZDisplayOptions defaultOptions] likeCustomText];
+                    if (likeCustomText != nil && ![likeCustomText isEqualToString:@""]) {
+                        selectNetwork.continueText = likeCustomText;
+                    }
+                    else {
+                        selectNetwork.continueText = SHARE_LIKE_COMPLETE_TEXT;
+                        
+                    }
+                }
                     break;
             }
             
@@ -375,6 +414,20 @@ void SZCreateAndShareActivity(id<SZActivity> activity,
                 postData.entity = [activity entity];
                 postData.propagationInfo = [activity propagationInfoResponse];
                 
+                NSString *shareText;
+                if ([activity conformsToProtocol:@protocol(SZShare)]) {
+                    id<SZShare> share = (id<SZShare>)activity;
+                    shareText = [share text];
+                
+                } else if ([activity conformsToProtocol:@protocol(SZComment)]) {
+                    id<SZComment> comment = (id<SZComment>)activity;
+                    shareText = [comment text];
+                }
+                else {
+                    shareText = @"";
+                }
+                
+                [params setObject:shareText forKey:@"share text"];
                 if (options.image != nil) {
                     postData.useMultipart = YES;
                     postData.path = @"/1.1/statuses/update_with_media.json";

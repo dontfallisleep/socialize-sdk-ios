@@ -245,7 +245,7 @@
 }
 
 - (void)showFromRect:(CGRect)rect inView:(UIView *)view offset:(CGPoint)offset animated:(BOOL)animated {
-    NSAssert(offset.y <= 0, @"Only above position (-y) is supported)");
+//    NSAssert(offset.y <= 0, @"Only above position (-y) is supported)");
     self.showFromRect = rect;
 
     // This is the middle of `rect`

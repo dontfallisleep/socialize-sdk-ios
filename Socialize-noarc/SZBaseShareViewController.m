@@ -24,6 +24,7 @@
 #import "SZNetworkImageProvider.h"
 #import "UIDevice+VersionCheck.h"
 #import <BlocksKit/BlocksKit+UIKit.h>
+#import "SZDisplayOptions.h"
 
 static NSString *CellIdentifier = @"CellIdentifier";
 
@@ -148,15 +149,26 @@ static NSInteger kFacebookLinkAlertTag = 1001;
         [SZLocationUtils getCurrentLocationWithSuccess:nil failure:nil];
     }
          
+    if ([[SZDisplayOptions defaultOptions] customTitleView] != nil) {
+        [[[SZDisplayOptions defaultOptions] customTitleView] setText:@"Share"];
+        self.navigationItem.titleView = [[SZDisplayOptions defaultOptions] customTitleView];
+    }
+    
     self.navigationItem.leftBarButtonItem = self.cancelButton;
     
-    WEAK(self) weakSelf = self;
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem blueSocializeBarButtonWithTitle:@"Continue" handler:^(id sender) {
-        [weakSelf continueButtonPressed:nil];
-    }];
     
+    WEAK(self) weakSelf = self;
     if ([self.continueText length]) {
-        [self.navigationItem.rightBarButtonItem changeTitleOnCustomButtonToText:self.continueText];
+//        [self.navigationItem.rightBarButtonItem changeTitleOnCustomButtonToText:self.continueText];
+        self.navigationItem.rightBarButtonItem = [UIBarButtonItem blueSocializeBarButtonWithTitle:self.continueText handler:^(id sender) {
+            [weakSelf continueButtonPressed:nil];
+        }];
+    }
+    else {
+        self.navigationItem.rightBarButtonItem = [UIBarButtonItem blueSocializeBarButtonWithTitle:@"Continue" handler:^(id sender) {
+            [weakSelf continueButtonPressed:nil];
+        }];
+        
     }
                                               
     if (self.headerView != nil) {
@@ -263,6 +275,7 @@ static NSInteger kFacebookLinkAlertTag = 1001;
 - (UISwitch*)facebookSwitch {
     if (facebookSwitch_ == nil) {
         facebookSwitch_ = [[UISwitch alloc] initWithFrame:CGRectZero];
+        [facebookSwitch_ setOnTintColor:[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0]];
         facebookSwitch_.accessibilityLabel = @"Facebook Switch";
         
         WEAK(self) weakSelf = self;
@@ -322,6 +335,7 @@ static NSInteger kFacebookLinkAlertTag = 1001;
 - (UISwitch*)twitterSwitch {
     if (twitterSwitch_ == nil) {
         twitterSwitch_ = [[UISwitch alloc] initWithFrame:CGRectZero];
+        [twitterSwitch_ setOnTintColor:[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0]];
         
         twitterSwitch_.accessibilityLabel = @"Twitter Switch";
         

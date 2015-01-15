@@ -34,6 +34,12 @@
     NSAssert(consumerKey != nil, credentialsMessage);
     NSAssert(consumerSecret != nil, credentialsMessage);
     
+    NSLog(@"Access Token %@ accessTokenSecret %@ consumer Key %@ consumer Secret %@",
+          accessToken,
+          accessTokenSecret,
+          consumerKey,
+          consumerSecret);
+    
     SZTwitterImageRequest *request = [[SZTwitterImageRequest alloc] initWithConsumerKey:consumerKey
                                                                          consumerSecret:consumerSecret
                                                                                   token:accessToken

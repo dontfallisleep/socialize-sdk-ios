@@ -460,6 +460,7 @@ SYNTH_BLUE_SOCIALIZE_BAR_BUTTON(saveButton, @"Save")
 - (UISwitch*)facebookSwitch {
     if (facebookSwitch_ == nil) {
         facebookSwitch_ = [[UISwitch alloc] initWithFrame:CGRectZero];
+        [facebookSwitch_ setOnTintColor:[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0]];
         
         if ([SocializeThirdPartyFacebook isLinkedToSocialize]) {
             BOOL switchOn = ![[self.userDefaults objectForKey:kSOCIALIZE_DONT_POST_TO_FACEBOOK_KEY] boolValue] && [[self.userDefaults objectForKey:kSocializeAutoPostToSocialNetworksKey] boolValue];
@@ -484,6 +485,7 @@ SYNTH_BLUE_SOCIALIZE_BAR_BUTTON(saveButton, @"Save")
 - (UISwitch*)twitterSwitch {
     if (twitterSwitch_ == nil) {
         twitterSwitch_ = [[UISwitch alloc] initWithFrame:CGRectZero];
+        [facebookSwitch_ setOnTintColor:[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0]];
         
         if ([SocializeThirdPartyTwitter isLinkedToSocialize]) {
             BOOL switchOn = ![[self.userDefaults objectForKey:kSOCIALIZE_DONT_POST_TO_TWITTER_KEY] boolValue] && [[self.userDefaults objectForKey:kSocializeAutoPostToSocialNetworksKey] boolValue];

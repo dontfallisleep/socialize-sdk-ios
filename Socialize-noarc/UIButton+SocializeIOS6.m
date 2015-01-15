@@ -8,6 +8,7 @@
 
 #import "UIButton+SocializeIOS6.h"
 #import "UILabel-Additions.h"
+#import "SZDisplayOptions.h"
 
 @implementation UIButtonIOS6
 
@@ -37,31 +38,42 @@
     NSString * normalImageURI = nil;
     NSString * highlightImageURI = nil;
     NSString * disabledImageURI = nil;
-    switch (type) {
-        case AMSOCIALIZE_BUTTON_TYPE_RED:
-            normalImageURI = @"socialize-navbar-button-red.png";
-            highlightImageURI = @"socialize-navbar-button-red-active.png";
-            break;
-        case AMSOCIALIZE_BUTTON_TYPE_BLUE:
-            normalImageURI = @"socialize-navbar-button-blue-bg-normal.png";
-            highlightImageURI = @"socialize-navbar-button-blue-bg-highlighted.png";
-            disabledImageURI = @"socialize-navbar-button-blue-bg-inactive.png";
-            break;
-        case AMSOCIALIZE_BUTTON_TYPE_BLACK:
-        default:
-            normalImageURI = @"socialize-navbar-button-dark.png";
-            highlightImageURI = @"socialize-navbar-button-dark-active.png";
-            break;
+
+    UIColor * disabledColor = [UIColor colorWithRed:220.0/255.0 green:220/255.0 blue:220/255.0 alpha:1.0];
+    [self setTitleColor:disabledColor forState:UIControlStateDisabled];
+    [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+
+    if (([[SZDisplayOptions defaultOptions] normalCustomImageURI] != nil) &&
+        ([[SZDisplayOptions defaultOptions] highlightCustomImageURI])) {
+        normalImageURI = [[SZDisplayOptions defaultOptions] normalCustomImageURI];
+        highlightImageURI = [[SZDisplayOptions defaultOptions] highlightCustomImageURI];
+        [[self layer] setCornerRadius:6.0];
+        [[self layer] setBorderColor:[[UIColor blackColor] CGColor]];
+        [[self layer] setBorderWidth:1.0];
+    }
+    else {
+        switch (type) {
+            case AMSOCIALIZE_BUTTON_TYPE_RED:
+                normalImageURI = @"socialize-navbar-button-red.png";
+                highlightImageURI = @"socialize-navbar-button-red-active.png";
+                break;
+            case AMSOCIALIZE_BUTTON_TYPE_BLUE:
+                normalImageURI = @"socialize-navbar-button-blue-bg-normal.png";
+                highlightImageURI = @"socialize-navbar-button-blue-bg-highlighted.png";
+                disabledImageURI = @"socialize-navbar-button-blue-bg-inactive.png";
+                break;
+            case AMSOCIALIZE_BUTTON_TYPE_BLACK:
+            default:
+                normalImageURI = @"socialize-navbar-button-dark.png";
+                highlightImageURI = @"socialize-navbar-button-dark-active.png";
+                break;
+        }
     }
     
     UIImage * normalImage = [[UIImage imageNamed:normalImageURI]stretchableImageWithLeftCapWidth:6 topCapHeight:0] ;
     UIImage * highlightImage = [[UIImage imageNamed:highlightImageURI]stretchableImageWithLeftCapWidth:6 topCapHeight:0];
     
-    UIColor * disabledColor = [UIColor colorWithRed:220.0/255.0 green:220/255.0 blue:220/255.0 alpha:1.0];
-    [self setTitleColor:disabledColor forState:UIControlStateDisabled];
-    [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self setTitleShadowColor:disabledColor forState:UIControlStateDisabled];
-	
     [self setBackgroundImage:normalImage forState:UIControlStateNormal];
 	[self setBackgroundImage:highlightImage forState:UIControlStateHighlighted];
     self.titleLabel.textColor = [UIColor whiteColor];
@@ -105,8 +117,22 @@
 
 //overrides superclass category method for legacy OS
 - (void)configureBackButtonWithTitle:(NSString *)title {
-    UIImage* backImageNormal = [[UIImage imageNamed:@"socialize-navbar-button-back.png"]stretchableImageWithLeftCapWidth:14 topCapHeight:0] ;
-	UIImage* backImageHighligted = [[UIImage imageNamed:@"socialize-navbar-button-back-pressed.png"]stretchableImageWithLeftCapWidth:14 topCapHeight:0];
+    
+    NSString *backImageNormalName;
+    NSString *backImageHighlightedName;
+    
+    if (([[SZDisplayOptions defaultOptions] backCustomImageURI] != nil) &&
+        ([[SZDisplayOptions defaultOptions] backHighlightCustomImageURI])) {
+        backImageNormalName = [[SZDisplayOptions defaultOptions] backCustomImageURI];
+        backImageHighlightedName = [[SZDisplayOptions defaultOptions] backHighlightCustomImageURI];
+    }
+    else {
+        backImageNormalName = @"socialize-navbar-button-back.png";
+        backImageHighlightedName = @"socialize-navbar-button-back-pressed.png";
+	}
+
+    UIImage* backImageNormal = [[UIImage imageNamed:backImageNormalName]stretchableImageWithLeftCapWidth:14 topCapHeight:0] ;
+	UIImage* backImageHighligted = [[UIImage imageNamed:backImageHighlightedName]stretchableImageWithLeftCapWidth:14 topCapHeight:0];
 	
 	[self setBackgroundImage:backImageNormal forState:UIControlStateNormal];
 	[self setBackgroundImage:backImageHighligted forState:UIControlStateHighlighted];

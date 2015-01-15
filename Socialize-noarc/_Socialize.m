@@ -218,7 +218,7 @@ static Socialize *_sharedSocialize;
         if([[UIDevice currentDevice] systemMajorVersion] >= 7) {
             UIColor *barColor = [UIColor navigationBarBackgroundColor];
             NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                       [UIColor blackColor], NSForegroundColorAttributeName,
+                                                       [UIColor whiteColor], NSForegroundColorAttributeName,
                                                        nil];
             [[UINavigationBar appearanceWhenContainedIn:[SZViewControllerWrapper class], nil] setBarTintColor:barColor];
             [[UINavigationBar appearanceWhenContainedIn:[SZViewControllerWrapper class], nil] setTintColor:[UIColor whiteColor]];
@@ -708,7 +708,26 @@ SYNTH_DEFAULTS_BOOL_PROPERTY(OGLikeEnabled, OGLikeEnabled, kSocializeOGLikeEnabl
     [_likeService getLikesForEntityKey:key first:first last:last] ;
 }
 
-#pragma mark comment related  stuff
+-(void)getLikeById: (int) likeId{
+    [_likeService getLikeById:likeId];
+}
+
+-(void)getLikeList: (NSString*) entryKey first:(NSNumber*)first last:(NSNumber*)last{
+    [_likeService getLikeList:entryKey first:first last:last];
+}
+
+- (void)getLikesWithIds:(NSArray*)likeIds success:(void(^)(NSArray *likes))success failure:(void(^)(NSError *error))failure {
+    [_likeService getLikesWithIds:likeIds success:success failure:failure];
+}
+- (void)getLikesWithEntityKey:(NSString*)entityKey success:(void(^)(NSArray *likes))success failure:(void(^)(NSError *error))failure {
+    [_likeService getLikesWithEntityKey:entityKey success:success failure:failure];
+}
+
+- (void)getLikesWithFirst:(NSNumber*)first last:(NSNumber*)last success:(void(^)(NSArray *likes))success failure:(void(^)(NSError *error))failure {
+    [_likeService getLikesWithFirst:first last:last success:success failure:failure];
+}
+
+#pragma mark like related  stuff
 
 -(void)getCommentById: (int) commentId{
     [_commentsService getCommentById:commentId];
@@ -871,16 +890,8 @@ SYNTH_DEFAULTS_BOOL_PROPERTY(OGLikeEnabled, OGLikeEnabled, kSocializeOGLikeEnabl
     [_userService getActivityForUser:user entity:entity first:first last:last success:success failure:failure];    
 }
 
-- (void)getLikesWithIds:(NSArray*)likeIds success:(void(^)(NSArray *comments))success failure:(void(^)(NSError *error))failure {
-    [_likeService getLikesWithIds:likeIds success:success failure:failure];
-}
-
 - (void)getLikesForEntity:(id<SZEntity>)entity first:(NSNumber*)first last:(NSNumber*)last success:(void(^)(NSArray *likes))success failure:(void(^)(NSError *error))failure {
     [_likeService getLikesForEntity:entity first:first last:last success:success failure:failure];
-}
-
-- (void)getLikesWithFirst:(NSNumber*)first last:(NSNumber*)last success:(void(^)(NSArray *comments))success failure:(void(^)(NSError *error))failure {
-    [_likeService getLikesWithFirst:first last:last success:success failure:failure];
 }
 
 - (void)createLikes:(NSArray*)likes success:(void(^)(id entityOrEntities))success failure:(void(^)(NSError *error))failure {

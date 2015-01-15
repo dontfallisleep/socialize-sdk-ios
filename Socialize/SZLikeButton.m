@@ -19,6 +19,7 @@
 #import "SZLikeButtonIOS6.h"
 #import "UIDevice+VersionCheck.h"
 #import "UIColor+Socialize.h"
+#import "SZDisplayOptions.h"
 
 @interface SZLikeButton ()
 
@@ -150,11 +151,22 @@
 }
 
 + (UIImage *)defaultLikedIcon {
-    return [UIImage imageNamed:@"action-bar-icon-liked.png"];
+    if ([[SZDisplayOptions defaultOptions] likedIconCustomImage] != nil) {
+        return [UIImage imageNamed:[[SZDisplayOptions defaultOptions] likedIconCustomImage]];
+    }
+    else {
+        return [UIImage imageNamed:@"action-bar-icon-liked.png"];
+    }
 }
 
 + (UIImage *)defaultUnlikedIcon {
-    return [UIImage imageNamed:@"action-bar-icon-like.png"];
+    if ([[SZDisplayOptions defaultOptions] likeIconCustomImage] != nil &&
+        ![[[SZDisplayOptions defaultOptions] likeIconCustomImage] isEqualToString:@""]) {
+        return [UIImage imageNamed:[[SZDisplayOptions defaultOptions] likeIconCustomImage]];
+    }
+    else {
+        return [UIImage imageNamed:@"action-bar-icon-like.png"];
+    }
 }
 
 - (void)setLikedIcon:(UIImage*)likedIcon {

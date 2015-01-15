@@ -24,6 +24,7 @@
 #import "SZLinkDialogView.h"
 #import "_SZLinkDialogViewControllerIOS6.h"
 #import "UIDevice+VersionCheck.h"
+#import "SZDisplayOptions.h"
 
 #define LINK_DIALOG_BUCKET @"LINK_DIALOG"
 
@@ -95,7 +96,14 @@ CGFloat SocializeAuthTableViewRowHeight = 56;
     = [[[_SZLinkDialogViewController alloc] initWithDelegate:delegate] autorelease];
                                                                                                               
     UINavigationController *navController = [[[UINavigationController alloc] initWithRootViewController:authController] autorelease];
-    UIImage *navBarImage = [UIImage imageNamed:@"socialize-navbar-bg.png"];
+    UIImage * navBarImage;
+    if ([[SZDisplayOptions defaultOptions] navBarBGImageName] != nil) {
+        navBarImage = [UIImage imageNamed:[[SZDisplayOptions defaultOptions] navBarBGImageName]];
+        [[navController navigationBar] setTintColor:[UIColor whiteColor]];
+    }
+    else {
+        navBarImage = [UIImage imageNamed:@"socialize-navbar-bg.png"];
+    }
     [navController.navigationBar setBackgroundImage:navBarImage];
     return navController;
 }
@@ -104,6 +112,7 @@ CGFloat SocializeAuthTableViewRowHeight = 56;
     if( self = [super initWithNibName:@"_SZLinkDialogViewController" bundle:nil] ) {
         self.delegate = delegate;
         self.title = @"Authenticate";
+        self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     }
     return self;
 }

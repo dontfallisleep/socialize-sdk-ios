@@ -23,6 +23,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import "SZUserUtils.h"
 #import <BlocksKit/BlocksKit+UIKit.h>
+#import "SZDisplayOptions.h"
+
 
 #define kCenterPointLatitude  37.779941
 #define kCenterPointLongitude -122.417908
@@ -99,10 +101,12 @@
         self.activityDetailsView.locationTextLabel.text = self.currentLocationDescription;
         self.activityDetailsView.locationPinButton.enabled = YES;
         self.activityDetailsView.locationFatButton.enabled = YES;
+        self.activityDetailsView.locationPinButton.hidden = NO;
     } else {
-        self.activityDetailsView.locationTextLabel.text = @"Location unavailable";
-        self.activityDetailsView.locationPinButton.enabled = NO;            
+        self.activityDetailsView.locationTextLabel.text = @"";
+        self.activityDetailsView.locationPinButton.enabled = NO;
         self.activityDetailsView.locationFatButton.enabled = NO;
+        self.activityDetailsView.locationPinButton.hidden = YES;
     }
 }
 
@@ -209,6 +213,7 @@
     
     [self configureInterfaceForLocation];
     [self reverseGeocodeLocationAndUpdateInterface];
+    [[[SZDisplayOptions defaultOptions] customTitleView] setText:@"Comments"];
 }
 
 - (void)viewDidLoad

@@ -26,6 +26,7 @@
 #import "SocializeLoadingView.h"
 #import "socialize_globals.h"
 #import "UIDevice+VersionCheck.h"
+#import "SZDisplayOptions.h"
 
 @implementation SZShareUtils
 
@@ -119,7 +120,14 @@
 
     id<SocializeEntity> e = share.entity;
     
-    NSMutableString *msg = [NSMutableString stringWithString:@"I thought you would find this interesting: "];
+    NSString *customDefaultShareText = [[SZDisplayOptions defaultOptions] customDefaultShareText];
+    NSMutableString *msg;
+    if (customDefaultShareText != nil && ![customDefaultShareText isEqualToString:@""]) {
+        msg = [NSMutableString stringWithString:customDefaultShareText];
+    }
+    else{
+        msg = [NSMutableString stringWithString:@"I thought you would find this interesting: "];
+    }
     
     if ([e.name length] > 0) {
         [msg appendFormat:@"%@ ", e.name];

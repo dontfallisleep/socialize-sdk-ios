@@ -216,9 +216,17 @@ SYNTH_RED_SOCIALIZE_BAR_BUTTON(cancelButton, @"Cancel")
 
 -(UIBarButtonItem*) createLeftNavigationButtonWithCaption:(NSString*) caption
 {
-    UIButton *backButton = [UIButton blueSocializeNavBarBackButtonWithTitle:caption]; 
-    [backButton addTarget:self action:@selector(leftNavigationButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem * backLeftItem = [[[UIBarButtonItem alloc]initWithCustomView:backButton] autorelease];
+    UIBarButtonItem * backLeftItem;
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+        UIButton *backButton = [UIButton blueSocializeNavBarBackButtonWithTitle:caption];
+        [backButton addTarget:self action:@selector(leftNavigationButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        backLeftItem = [[[UIBarButtonItem alloc]initWithCustomView:backButton] autorelease];
+    }
+    else {
+        backLeftItem = [[UIBarButtonItem alloc] initWithTitle:caption style:UIBarButtonItemStylePlain target:self action:@selector(leftNavigationButtonPressed:)];
+        [backLeftItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"Lato-Bold" size:14.0], UITextAttributeFont,[UIColor whiteColor], UITextAttributeTextColor, nil] forState:UIControlStateNormal];
+        
+    }
     return backLeftItem;
 }
 

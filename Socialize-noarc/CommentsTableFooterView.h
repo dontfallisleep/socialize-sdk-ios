@@ -12,12 +12,16 @@
 {
     UIImageView     *searchBarImageView;
     UIButton        *addCommentButton;
+    UILabel         *addCommentLabel;
+    UIButton        *likeButton;
 }
 
 @property (nonatomic, retain) IBOutlet UIImageView *backgroundImageView;
 @property (nonatomic, retain) IBOutlet UIImageView *searchBarImageView;
+@property (nonatomic, retain) IBOutlet UIButton * likeButton;
 @property (nonatomic, retain) IBOutlet UIButton *addCommentButton;
 @property (nonatomic, retain) IBOutlet UIView *addCommentView;
+@property (nonatomic, retain) IBOutlet UILabel *addCommentLabel;
 @property (retain, nonatomic) IBOutlet UIButton	*subscribedButton;
 
 - (void)hideSubscribedButton;

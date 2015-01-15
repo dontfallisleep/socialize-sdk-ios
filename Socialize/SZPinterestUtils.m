@@ -11,6 +11,7 @@
 #import "SDKHelpers.h"
 #import "Socialize.h"
 #import "SZPinterestEngine.h"
+#import "SZDisplayOptions.h"
 
 @implementation SZPinterestUtils
 
@@ -37,7 +38,14 @@
     
     id<SocializeEntity> e = share.entity;
     
-    NSMutableString *msg = [NSMutableString stringWithString:@"I thought you would find this interesting: "];
+    NSString *customDefaultShareText = [[SZDisplayOptions defaultOptions] customDefaultShareText];
+    NSMutableString *msg;
+    if (customDefaultShareText != nil && ![customDefaultShareText isEqualToString:@""]) {
+        msg = [NSMutableString stringWithString:customDefaultShareText];
+    }
+    else{
+        msg = [NSMutableString stringWithString:@"I thought you would find this interesting: "];
+    }
     
     if ([e.name length] > 0) {
         [msg appendFormat:@"%@ ", e.name];

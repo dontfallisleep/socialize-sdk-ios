@@ -144,7 +144,7 @@ NSString * const kNoCommentMessage = @"Could not load activity.";
 
 - (void)setActivity:(id<SocializeActivity>)activity {
     NonatomicRetainedSetToFrom(activity_, activity);
-    NSAssert([activity conformsToProtocol:@protocol(SocializeComment)], @"Only comments are supported");
+    NSAssert([activity conformsToProtocol:@protocol(SocializeComment)] || [activity conformsToProtocol:@protocol(SocializeLike)], @"Only comments are supported");
     id<SocializeComment> comment = (id<SocializeComment>)activity;
     NSString *activityText = comment.text;
     [self updateActivityMessage:activityText 

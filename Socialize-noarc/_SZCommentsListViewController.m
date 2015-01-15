@@ -22,12 +22,14 @@
 #import "ImagesCache.h"
 #import "SocializeTableBGInfoView.h"
 #import "SocializeCommentsService.h"
+#import "SocializeLikeService.h"
 #import "SocializeActivityDetailsViewController.h"
 #import "SocializeSubscriptionService.h"
 #import "SocializeBubbleView.h"
 #import "UIView+Layout.h"
 #import "SocializeNotificationToggleBubbleContentView.h"
 #import "CommentsTableFooterView.h"
+#import "CommentsTableHeaderView.h"
 #import "SZNavigationController.h"
 #import "SocializePrivateDefinitions.h"
 #import "SDKHelpers.h"
@@ -35,6 +37,7 @@
 #import "SZCommentUtils.h"
 #import "SZComposeCommentViewController.h"
 #import "socialize_globals.h"
+#import "SZDisplayOptions.h"
 
 @interface _SZCommentsListViewController()
 @end
@@ -48,6 +51,7 @@
 @synthesize noCommentsIconView;
 @synthesize commentsCell;
 @synthesize footerView;
+@synthesize headerView;
 @synthesize closeButton = _closeButton;
 @synthesize brandingButton = _brandingButton;
 @synthesize entity = _entity;
@@ -115,6 +119,8 @@
         /* cache for the images*/
         _cache = [[ImagesCache alloc] init];
         
+        likesOn = NO;
+        
 	}
     return self;
 }
@@ -129,8 +135,24 @@
     [self getSubscriptionStatus];
 }
 
+- (void)startLoadingContent {
+    [[headerView commentsLikeSelection] setEnabled:FALSE];
+    [super startLoadingContent];
+    
+}
+- (void)stopLoadingContent {
+    [super stopLoadingContent];
+    [[headerView commentsLikeSelection] setEnabled:TRUE];
+}
+
 - (void)loadContentForNextPageAtOffset:(NSInteger)offset {
-    if ([_entity.key length] > 0) {
+    if (likesOn) {
+        [self.socialize getLikesForEntityKey:_entity.key
+                                       first:[NSNumber numberWithInteger:offset]
+                                        last:[NSNumber numberWithInteger:offset + self.pageSize]];
+    }
+    else {
+        
         [self.socialize getCommentList:_entity.key
                                  first:[NSNumber numberWithInteger:offset]
                                   last:[NSNumber numberWithInteger:offset + self.pageSize]];
@@ -138,10 +160,19 @@
 }
 
 - (UIBarButtonItem*)closeButton {
-    if (_closeButton == nil) {
-        UIButton *button = [UIButton blueSocializeNavBarButtonWithTitle:@"Close"];
-        [button addTarget:self action:@selector(closeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        _closeButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    if (_closeButton == nil)
+    {
+        if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+            UIButton *button = [UIButton blueSocializeNavBarButtonWithTitle:@"Close"];
+            [button addTarget:self action:@selector(closeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+            _closeButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+        }
+        else {
+            _closeButton = [[UIBarButtonItem alloc] initWithTitle:@"Close" style:UIBarButtonItemStylePlain target:self action:@selector(closeButtonPressed:)];
+            [_closeButton setTitle:@"Close"];
+            [_closeButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"Lato-Bold" size:14.0], UITextAttributeFont,[UIColor whiteColor], UITextAttributeTextColor, nil] forState:UIControlStateNormal];
+            
+        }
     }
     return _closeButton;
 }
@@ -170,7 +201,8 @@
 #pragma mark SocializeService Delegate
 
 -(void)service:(SocializeService *)service didFail:(NSError *)error {
-    if ([service isKindOfClass:[SocializeCommentsService class]]) {
+    if ([service isKindOfClass:[SocializeCommentsService class]] ||
+        ([service isKindOfClass:[SocializeLikeService class]])) {
         _isLoading = NO;
         if ( [[error localizedDescription] isEqualToString:@"Entity does not exist."] ) {
             // Entity does not yet exist. No content to fetch.
@@ -199,7 +231,9 @@
         BOOL subscribed = [self elementsHaveActiveSubscription:dataArray];
         self.footerView.subscribedButton.enabled = YES;
         self.footerView.subscribedButton.selected = subscribed;
-    } else if ([service isKindOfClass:[SocializeCommentsService class]]) {
+        NSLog(@"Subscribed is %d", subscribed);
+    } else if ([service isKindOfClass:[SocializeCommentsService class]] ||
+               [service isKindOfClass:[SocializeLikeService class]]) {
         [self receiveNewContent:dataArray];
         _isLoading = NO;
     }
@@ -255,6 +289,30 @@
     [self showAndHideBubble];
 }
 
+- (IBAction)likeButtonPressed:(id)sender {
+    
+}
+- (IBAction)commentsLikeSelectorPressed:(id)sender {
+    
+    if (sender != nil) {
+        UISegmentedControl *commentsLikesSelector = (UISegmentedControl *)sender;
+        
+        if ([commentsLikesSelector selectedSegmentIndex] == 0) {
+            likesOn = NO;
+            self.informationView.errorLabel.text = @"No comments to show.";
+        }
+        else {
+            likesOn = YES;
+            NSString *likeCustomText = [[SZDisplayOptions defaultOptions] likeCustomText];
+            if (likeCustomText != nil && ![likeCustomText isEqualToString:@""]) {
+                [[headerView commentsLikeSelection] setTitle:[likeCustomText stringByAppendingString:@"s"] forSegmentAtIndex:1];
+            }
+            [headerView hideSubscribedButton];
+            self.informationView.errorLabel.text = [NSString stringWithFormat:@"No %@s to show.", likeCustomText];
+        }
+    }
+    [self refreshContent];
+}
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 
@@ -279,12 +337,36 @@
 
     self.tableView.accessibilityLabel = @"Comments Table View";
 	self.tableView.clipsToBounds = YES;    
+    if ([self.tableView respondsToSelector:@selector(setSeparatorStyle:)]) {
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    }
     
-    
-    self.navigationItem.leftBarButtonItem = self.brandingButton;
-    self.navigationItem.rightBarButtonItem = self.closeButton;    
+    if ([[SZDisplayOptions defaultOptions] customTitleView] != nil) {
+        [[[SZDisplayOptions defaultOptions] customTitleView] setText:@"Comments"];
+        self.navigationItem.titleView = [[SZDisplayOptions defaultOptions] customTitleView];
+    }
+    else {
+        self.navigationItem.leftBarButtonItem = self.brandingButton;
+    }
+    self.navigationItem.rightBarButtonItem = self.closeButton;
     
     self.footerView.subscribedButton.enabled = NO;
+    
+    NSString *likeCustomText = [[SZDisplayOptions defaultOptions] likeCustomText];
+    if (likeCustomText != nil && ![likeCustomText isEqualToString:@""]) {
+        [[headerView commentsLikeSelection] setTitle:[likeCustomText stringByAppendingString:@"s"] forSegmentAtIndex:1];
+        [[headerView commentsLikeSelection] setTintColor:[UIColor whiteColor]];
+        [[headerView commentsLikeSelection] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
+                                                                     [UIColor whiteColor], UITextAttributeTextColor,
+                                                                     [UIFont fontWithName:@"Lato-Bold"  size:12.0], UITextAttributeFont,
+                                                                     nil]
+                                                          forState:UIControlStateSelected];
+        [[headerView commentsLikeSelection] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                    [UIColor whiteColor], UITextAttributeTextColor,
+                                                                    [UIFont fontWithName:@"Lato-Bold"  size:12.0], UITextAttributeFont,
+                                                                    nil]
+                                                          forState:UIControlStateNormal];
+    }
     
     if (![SZSmartAlertUtils isAvailable]) {
         [self.footerView hideSubscribedButton];
@@ -342,7 +424,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if ([self.content count]){
+    if ([self.content count] && likesOn == NO){
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         SocializeComment* entryComment = ((SocializeComment*)[self.content objectAtIndex:indexPath.row]);
         
@@ -352,9 +434,19 @@
 
         [_cache stopOperations];
         
-        UIBarButtonItem * backLeftItem = [self createLeftNavigationButtonWithCaption:@"Comments"];
-        details.navigationItem.leftBarButtonItem = backLeftItem;	
-           
+        if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+            UIBarButtonItem * backLeftItem = [self createLeftNavigationButtonWithCaption:@"Comments"];
+            details.navigationItem.leftBarButtonItem = backLeftItem;
+        }
+        else {
+            [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                  [UIColor whiteColor], UITextAttributeTextColor,
+                                                                  [UIFont fontWithName:@"Lato-Bold" size:14.0], UITextAttributeFont, [UIColor darkGrayColor], UITextAttributeTextShadowColor, [NSValue valueWithCGSize:CGSizeMake(0.0, -1.0)], UITextAttributeTextShadowOffset,
+                                                                  nil] forState:UIControlStateNormal];
+            
+            
+            self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+        }
         [self.navigationController pushViewController:details animated:YES];
     }
 }
@@ -378,8 +470,16 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)newTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	static NSString *MyIdentifier = @"socializecommentcell";
-	CommentsTableViewCell *cell = (CommentsTableViewCell*)[newTableView dequeueReusableCellWithIdentifier:MyIdentifier];
+    static NSString *likeIdentifier = @"socializelikecell";
+    static NSString *commentIdentifier = @"socializecommentcell";
+    
+    CommentsTableViewCell *cell;
+    if (likesOn) {
+        cell = (CommentsTableViewCell*)[newTableView dequeueReusableCellWithIdentifier:likeIdentifier];
+	}
+    else {
+        cell = (CommentsTableViewCell*)[newTableView dequeueReusableCellWithIdentifier:commentIdentifier];
+    }
 	
     if (cell == nil) {
         // Create a temporary UIViewController to instantiate the custom cell.
@@ -394,7 +494,13 @@
 	
     SocializeComment* entryComment = ((SocializeComment*)[self.content objectAtIndex:indexPath.row]);
 
-    NSString *commentText = entryComment.text;
+    NSString *commentText;
+    if (likesOn == YES) {
+        commentText = @"High Fived this photo";
+    }
+    else {
+        commentText = entryComment.text;
+    }
     NSString *commentHeadline = entryComment.user.displayName;
     
     cell.locationPin.hidden = (entryComment.lat == nil);
@@ -459,7 +565,12 @@
 
 // Variable height support
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return [CommentsTableViewCell getCellHeightForString:((SocializeComment*)[self.content objectAtIndex:indexPath.row]).text] + 50;
+    if (likesOn) {
+        return 65;
+    }
+    else {
+        return [CommentsTableViewCell getCellHeightForString:((SocializeComment*)[self.content objectAtIndex:indexPath.row]).text] + 50;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {

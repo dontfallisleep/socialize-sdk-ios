@@ -19,7 +19,7 @@
 #define ENTRY_KEY @"key"
 #define ENTITY_KEY @"entity"
 #define LIKES_METHOD @"like/"
-
+#define ID_KEY @"key/"
 
 @interface SocializeLikeService()
 @end
@@ -169,5 +169,62 @@
 - (void)getLikesWithFirst:(NSNumber*)first last:(NSNumber*)last success:(void(^)(NSArray *likes))success failure:(void(^)(NSError *error))failure {
     [self callListingGetEndpointWithPath:LIKES_METHOD params:nil first:first last:last success:success failure:failure];
 }
+
+-(void) getLikeList: (NSArray*) likeId andKeys: (NSArray*)keys
+{
+    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithCapacity:2];
+    if(likeId!=nil && [likeId count] != 0)
+        [params setObject:likeId forKey:ID_KEY];
+    
+    if(keys!=nil && [keys count] != 0)
+        [params setObject:keys forKey:ENTRY_KEY];
+    
+    NSAssert([params count] != 0, @"User should provide commet ids or keys");
+    
+    [self executeRequest:
+     [SocializeRequest requestWithHttpMethod:@"GET"
+                                resourcePath:LIKE_METHOD
+                          expectedJSONFormat:SocializeDictionaryWithListAndErrors
+                                      params:params]
+     ];
+}
+-(void) getLikeList: (NSString*) entryKey first:(NSNumber*)first last:(NSNumber*)last{
+    NSMutableDictionary* params;
+    
+    if (!first || !last)
+        params = [NSMutableDictionary dictionaryWithObjectsAndKeys:entryKey, @"entity_key", nil];
+    else
+        params = [NSMutableDictionary dictionaryWithObjectsAndKeys:entryKey, @"entity_key", first, @"first", last, @"last", nil];
+    
+    [self executeRequest:
+     [SocializeRequest requestWithHttpMethod:@"GET"
+                                resourcePath:LIKE_METHOD
+                          expectedJSONFormat:SocializeDictionaryWithListAndErrors
+                                      params:params]
+     ];
+}
+
+- (void) getLikeById: (int) likeId
+{
+    [self getLikeList:[NSArray arrayWithObject:[NSNumber numberWithInt:likeId]] andKeys:nil];
+}
+
+- (void)getLikesWithEntityKey:(NSString*)entityKey success:(void(^)(NSArray *likes))success failure:(void(^)(NSError *error))failure {
+    NSDictionary *params = [NSDictionary dictionaryWithObject:entityKey forKey:@"entity_key"];
+    [self callLikesGetWithParams:params success:success failure:failure];
+}
+
+- (void)callLikesGetWithParams:(NSDictionary*)params success:(void(^)(NSArray *likes))success failure:(void(^)(NSError *error))failure {
+    SocializeRequest *request = [SocializeRequest requestWithHttpMethod:@"GET"
+                                                           resourcePath:LIKE_METHOD
+                                                     expectedJSONFormat:SocializeDictionaryWithListAndErrors
+                                                                 params:params];
+    
+    request.successBlock = success;
+    request.failureBlock = failure;
+    
+    [self executeRequest:request];
+}
+
 
 @end

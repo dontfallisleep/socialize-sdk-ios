@@ -14,7 +14,7 @@
 int const SocializeButtonFontSize = 16;
 int const SocializeButtonWidth = 100;
 int const SocializeButtonHeight = 31;
-int const SocializeButtonPadding = 5;
+int const SocializeButtonPadding = 20;
 
 @implementation UIButton (Socialize)
 

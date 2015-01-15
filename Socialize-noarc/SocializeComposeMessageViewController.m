@@ -332,9 +332,9 @@ SYNTH_BLUE_SOCIALIZE_BAR_BUTTON(sendButton, @"Send")
     
     self.navigationItem.rightBarButtonItem = self.sendButton;
     
-    if (SZShouldShowNetworkSelection()) {
-        [self.sendButton changeTitleOnCustomButtonToText:@"Continue"];
-    }
+//    if (SZShouldShowNetworkSelection()) {
+//        [self.sendButton changeTitleOnCustomButtonToText:@"Go Ahead"];
+//    }
     
     self.commentTextView.text = self.initialText;
     [self.commentTextView becomeFirstResponder];

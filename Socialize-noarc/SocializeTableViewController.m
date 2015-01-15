@@ -116,6 +116,14 @@ NSInteger SocializeTableViewControllerDefaultPageSize = 20;
     }
 }
 
+- (void) refreshContent {
+    [self stopLoadingContent];
+    self.loadedAllContent = NO;
+    self.initialized = NO;
+    self.content = nil;
+    [self initializeContent];
+
+}
 - (SocializeTableBGInfoView*)informationView {
     if (informationView_ == nil) {
         
@@ -192,7 +200,7 @@ NSInteger SocializeTableViewControllerDefaultPageSize = 20;
 - (void)receiveNewContent:(NSArray*)content {
     [self stopLoadingContent];
     
-    BOOL animated = [self isViewLoaded] && self.view.window != nil;
+    BOOL animated = [self isViewLoaded] && self.view.window != nil && self.initialized;
     
     if ([content count] > 0) {
         
@@ -214,6 +222,9 @@ NSInteger SocializeTableViewControllerDefaultPageSize = 20;
     
     if ([content count] < self.pageSize || [content count] == 0) {
         self.loadedAllContent = YES;
+        if ([self isViewLoaded]) {
+            [self.tableView reloadData];
+        }
     }
     
     if (!self.initialized) {

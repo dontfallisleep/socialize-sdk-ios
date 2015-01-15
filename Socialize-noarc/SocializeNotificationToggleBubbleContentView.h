@@ -11,6 +11,7 @@
 @interface SocializeNotificationToggleBubbleContentView : UIView
 + (SocializeNotificationToggleBubbleContentView*)notificationToggleBubbleContentViewFromNib;
 
+@property (nonatomic, retain) IBOutlet UILabel *notificationLabel;
 @property (nonatomic, retain) IBOutlet UILabel *enabledStateLabel;
 @property (nonatomic, retain) IBOutlet UILabel *descriptionLabel;
 

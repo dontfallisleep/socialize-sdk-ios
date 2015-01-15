@@ -28,5 +28,8 @@ extern NSInteger SocializeTableViewControllerDefaultPageSize;
 - (void)failLoadingContent;
 - (void)scrollToTop;
 - (void)initializeContent;
+- (void)refreshContent;
+- (void)startLoadingContent;
+- (void)stopLoadingContent;
 - (void)insertContentAtHead:(NSArray*)array;
 @end

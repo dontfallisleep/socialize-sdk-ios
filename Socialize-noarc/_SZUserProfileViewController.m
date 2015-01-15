@@ -17,6 +17,7 @@
 #import "socialize_globals.h"
 #import "UIDevice+VersionCheck.h"
 #import "_SZUserProfileViewControllerIOS6.h"
+#include "SZDisplayOptions.h"
 
 @interface _SZUserProfileViewController ()
 -(void)configureViews;
@@ -81,9 +82,15 @@
 
 + (UINavigationController*)socializeProfileViewControllerForUser:(id<SocializeUser>)user delegate:(id<SocializeBaseViewControllerDelegate>)delegate {
     _SZUserProfileViewController *profile = [[[_SZUserProfileViewController alloc] initWithUser:user delegate:delegate] autorelease];
-    UIImage *navImage = [UIImage imageNamed:@"socialize-navbar-bg.png"];
+    UIImage * navBarImage;
+    if ([[SZDisplayOptions defaultOptions] navBarBGImageName] != nil) {
+        navBarImage = [UIImage imageNamed:[[SZDisplayOptions defaultOptions] navBarBGImageName]];
+    }
+    else {
+        navBarImage = [UIImage imageNamed:@"socialize-navbar-bg.png"];
+    }
     UINavigationController *nav = [[[UINavigationController alloc] initWithRootViewController:profile] autorelease];
-    [nav.navigationBar setBackgroundImage:navImage];
+    [nav.navigationBar setBackgroundImage:navBarImage];
     return nav;
 }
 

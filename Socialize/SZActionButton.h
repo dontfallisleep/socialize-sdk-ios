@@ -35,6 +35,7 @@
 // Some default buttons
 + (SZActionButton*)commentButton;
 + (SZActionButton*)shareButton;
++ (SZActionButton*)shareButtonNoTitle;
 + (SZActionButton*)viewsButton;
 
 - (void)autoresize;

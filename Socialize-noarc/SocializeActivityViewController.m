@@ -14,6 +14,7 @@
 #import "_Socialize.h"
 #import "socialize_globals.h"
 #import "UIDevice+VersionCheck.h"
+#import "SZDisplayOptions.h"
 
 @implementation SocializeActivityViewController
 @synthesize activityTableViewCell = activityTableViewCell_;
@@ -100,7 +101,13 @@
     UIImage *image = nil;
     
     if ([activity isMemberOfClass:[SocializeLike class]]) {
-        image = [UIImage imageNamed:@"socialize-activity-cell-icon-like.png"];
+        if ([[SZDisplayOptions defaultOptions] likeIconCustomImage] != nil &&
+            ![[[SZDisplayOptions defaultOptions] likeIconCustomImage] isEqualToString:@""]) {
+            image = [UIImage imageNamed:[[SZDisplayOptions defaultOptions] likeIconCustomImage]];
+        }
+        else {
+            image = [UIImage imageNamed:@"socialize-activity-cell-icon-like.png"];
+        }
     }
     else if ([activity isMemberOfClass:[SocializeComment class]]) {
         image = [UIImage imageNamed:@"socialize-activity-cell-icon-comment.png"];
@@ -148,7 +155,13 @@
     } else if ([activity isMemberOfClass:[SocializeShare class]]) {
         titleText = [NSString stringWithFormat:@"Shared %@", entityName];
     } else if ([activity isMemberOfClass:[SocializeLike class]]) {
-        titleText = [NSString stringWithFormat:@"Likes %@", entityName];
+        NSString *likeCustomText = [[SZDisplayOptions defaultOptions] likeCustomText];
+        if (likeCustomText != nil && ![likeCustomText isEqualToString:@""]) {
+            titleText = [NSString stringWithFormat:@"%@d %@", likeCustomText, entityName];
+        }
+        else {
+            titleText = [NSString stringWithFormat:@"Likes %@", entityName];
+        }
     }
     
     return titleText;

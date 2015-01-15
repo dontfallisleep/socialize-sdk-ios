@@ -1396,6 +1396,14 @@
 		AAEC2B1015B4DA5400C9C65A /* example-distribution.embedded.mobileprovision in Resources */ = {isa = PBXBuildFile; fileRef = AAEC2B0F15B4DA5400C9C65A /* example-distribution.embedded.mobileprovision */; };
 		AAF580EE16BC99610007BE58 /* libGHUnitIOSSimulator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AADFBFE216B9FB7400291167 /* libGHUnitIOSSimulator.a */; };
 		AAFB0B8215E70FB10091600C /* ui_advanced.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFB0B8115E70FB10091600C /* ui_advanced.m */; };
+		D3327B401A5FFC1A00F8EDA4 /* action-bar-button-red-divider@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D3327B3E1A5FFC1A00F8EDA4 /* action-bar-button-red-divider@2x.png */; };
+		D3327B411A5FFC1A00F8EDA4 /* action-bar-button-red-divider.png in Resources */ = {isa = PBXBuildFile; fileRef = D3327B3F1A5FFC1A00F8EDA4 /* action-bar-button-red-divider.png */; };
+		D3BC20261A445312004B801C /* SZDisplayOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC20241A445312004B801C /* SZDisplayOptions.m */; };
+		D3BC20271A445312004B801C /* SZDisplayOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = D3BC20251A445312004B801C /* SZDisplayOptions.h */; };
+		D3BC202A1A4454F6004B801C /* CommentsTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC20281A4454F6004B801C /* CommentsTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D3BC202B1A4454F6004B801C /* CommentsTableHeaderView.h in Headers */ = {isa = PBXBuildFile; fileRef = D3BC20291A4454F6004B801C /* CommentsTableHeaderView.h */; };
+		D3DAB66E1A48511F00B2C8C7 /* action-bar-high-five-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D3DAB66A1A48511F00B2C8C7 /* action-bar-high-five-icon@2x.png */; };
+		D3DAB66F1A48511F00B2C8C7 /* action-bar-high-five-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D3DAB66B1A48511F00B2C8C7 /* action-bar-high-five-icon.png */; };
 		E8D06AD4AB0744E59601B738 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28052EE4EDAE4D3598062EF0 /* libPods.a */; };
 		E9100DB445E643B5A40E9FFA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28052EE4EDAE4D3598062EF0 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -2537,6 +2545,14 @@
 		AC2429241B964749A8E7E141 /* libPods-UIIntegrationAcceptanceTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-UIIntegrationAcceptanceTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B21DDA47C40B05B3A2C03DEF /* Pods-UIIntegrationAcceptanceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UIIntegrationAcceptanceTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UIIntegrationAcceptanceTests/Pods-UIIntegrationAcceptanceTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C55CC1E3CCD2B52835832A9F /* Pods-UIIntegrationAcceptanceTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UIIntegrationAcceptanceTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-UIIntegrationAcceptanceTests/Pods-UIIntegrationAcceptanceTests.release.xcconfig"; sourceTree = "<group>"; };
+		D3327B3E1A5FFC1A00F8EDA4 /* action-bar-button-red-divider@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "action-bar-button-red-divider@2x.png"; path = "Socialize/Resources/action-bar-button-red-divider@2x.png"; sourceTree = SOURCE_ROOT; };
+		D3327B3F1A5FFC1A00F8EDA4 /* action-bar-button-red-divider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "action-bar-button-red-divider.png"; path = "Socialize/Resources/action-bar-button-red-divider.png"; sourceTree = SOURCE_ROOT; };
+		D3BC20241A445312004B801C /* SZDisplayOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZDisplayOptions.m; sourceTree = "<group>"; };
+		D3BC20251A445312004B801C /* SZDisplayOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZDisplayOptions.h; sourceTree = "<group>"; };
+		D3BC20281A4454F6004B801C /* CommentsTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsTableHeaderView.m; sourceTree = "<group>"; };
+		D3BC20291A4454F6004B801C /* CommentsTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsTableHeaderView.h; sourceTree = "<group>"; };
+		D3DAB66A1A48511F00B2C8C7 /* action-bar-high-five-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "action-bar-high-five-icon@2x.png"; path = "Socialize/Resources/action-bar-high-five-icon@2x.png"; sourceTree = SOURCE_ROOT; };
+		D3DAB66B1A48511F00B2C8C7 /* action-bar-high-five-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "action-bar-high-five-icon.png"; path = "Socialize/Resources/action-bar-high-five-icon.png"; sourceTree = SOURCE_ROOT; };
 		DCB5E3C9AD8A5C165BAF2B6C /* Pods-UnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests.release.xcconfig"; sourceTree = "<group>"; };
 		E0B72F55C6E9807FDCE493D8 /* Pods-UnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2652,6 +2668,8 @@
 		2CB81F2D18773122006CBC2C /* Comments */ = {
 			isa = PBXGroup;
 			children = (
+				D3BC20281A4454F6004B801C /* CommentsTableHeaderView.m */,
+				D3BC20291A4454F6004B801C /* CommentsTableHeaderView.h */,
 				AA00864E158D35BD00480399 /* SocializeCommentDetailsViewController.h */,
 				AA00864F158D35BD00480399 /* SocializeCommentDetailsViewController.m */,
 				AA0086F5158D35BF00480399 /* _SZCommentsListViewController.h */,
@@ -2891,6 +2909,10 @@
 		2CBBFE481880B79F00A01EB2 /* ActionBar */ = {
 			isa = PBXGroup;
 			children = (
+				D3327B3E1A5FFC1A00F8EDA4 /* action-bar-button-red-divider@2x.png */,
+				D3327B3F1A5FFC1A00F8EDA4 /* action-bar-button-red-divider.png */,
+				D3DAB66A1A48511F00B2C8C7 /* action-bar-high-five-icon@2x.png */,
+				D3DAB66B1A48511F00B2C8C7 /* action-bar-high-five-icon.png */,
 				AA9358C7158F187200B5B2BC /* action-bar-bg.png */,
 				AA9358C8158F187200B5B2BC /* action-bar-bg@2x.png */,
 				AA9358C9158F187200B5B2BC /* action-bar-button-black-hover.png */,
@@ -3903,6 +3925,8 @@
 		AA41522E15911DF0003717AC /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				D3BC20241A445312004B801C /* SZDisplayOptions.m */,
+				D3BC20251A445312004B801C /* SZDisplayOptions.h */,
 				2CA67FEE18BC171C00B442DE /* SZActionBarUtils.h */,
 				2CA67FEF18BC171C00B442DE /* SZActionBarUtils.m */,
 				2CA67FF218BC178600B442DE /* SZActionUtils.h */,
@@ -4245,6 +4269,7 @@
 				2CE6271418A98EBD0070CD99 /* SocializeActionView.h in Headers */,
 				2CE6271518A98EC30070CD99 /* SocializeActionBar.h in Headers */,
 				2CE6271618A98EE80070CD99 /* SocializeObjects.h in Headers */,
+				D3BC202B1A4454F6004B801C /* CommentsTableHeaderView.h in Headers */,
 				2CE6271718A98EF60070CD99 /* SocializeActivityDetailsViewController.h in Headers */,
 				2CE6271818A98F040070CD99 /* SocializeActionBarDelegate.h in Headers */,
 				2CE6271918A98F1E0070CD99 /* _SZTwitterLinkViewController.h in Headers */,
@@ -4327,6 +4352,7 @@
 				2CA6801A18BC17A500B442DE /* SZPinterestUtils.h in Headers */,
 				2CA6801418BC17A500B442DE /* SZLikeUtils.h in Headers */,
 				2CA6800818BC178600B442DE /* SZFacebookUtils.h in Headers */,
+				D3BC20271A445312004B801C /* SZDisplayOptions.h in Headers */,
 				2CA6802C18BC17C000B442DE /* SZSubscriptionUtils.h in Headers */,
 				2CA6801618BC17A500B442DE /* SZLocationUtils.h in Headers */,
 				2CA67FF018BC171C00B442DE /* SZActionBarUtils.h in Headers */,
@@ -4556,6 +4582,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3327B401A5FFC1A00F8EDA4 /* action-bar-button-red-divider@2x.png in Resources */,
+				D3DAB66F1A48511F00B2C8C7 /* action-bar-high-five-icon.png in Resources */,
+				D3DAB66E1A48511F00B2C8C7 /* action-bar-high-five-icon@2x.png in Resources */,
+				D3327B411A5FFC1A00F8EDA4 /* action-bar-button-red-divider.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5877,6 +5907,7 @@
 				2C7DDB2C18A053550006A57A /* NSString+QueryString.m in Sources */,
 				2C7DDB2B18A053480006A57A /* StringHelper.m in Sources */,
 				2C7DDB2A18A052DB0006A57A /* UIBarButtonItem+Socialize.m in Sources */,
+				D3BC20261A445312004B801C /* SZDisplayOptions.m in Sources */,
 				2C7DDB2818A052CB0006A57A /* UITableView+Resize.m in Sources */,
 				2C7DDB2918A052CB0006A57A /* UITableView+Socialize.m in Sources */,
 				2C7DDB2718A052BC0006A57A /* DataHelper.m in Sources */,
@@ -5884,6 +5915,7 @@
 				2C7DDB2518A052980006A57A /* _SZShareDialogViewController.m in Sources */,
 				2C7DDB2418A04C840006A57A /* SZSessionTracker.m in Sources */,
 				2C7DDB2318A04C6C0006A57A /* UserHelper.m in Sources */,
+				D3BC202A1A4454F6004B801C /* CommentsTableHeaderView.m in Sources */,
 				2CBE4A6C18B6AD32001BBB47 /* SZSocialNetworkPostData.m in Sources */,
 				2CBE4A7218B6AE59001BBB47 /* NSString+UUID.m in Sources */,
 				2CBE4A7F18B6B35E001BBB47 /* SZActivityOptions.m in Sources */,

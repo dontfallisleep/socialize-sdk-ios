@@ -80,6 +80,16 @@
     return shareButton;
 }
 
++ (SZActionButton*)shareButtonNoTitle {
+    SZActionButton *shareButton = [SZActionButton actionButtonWithIcon:[UIImage imageNamed:@"action-bar-icon-share.png"] title:nil];
+    shareButton.actionBlock = ^(SZActionButton *button, SZActionBar *bar) {
+        [SZShareUtils showShareDialogWithViewController:bar.viewController options:bar.shareOptions entity:bar.entity completion:nil cancellation:nil];
+    };
+    shareButton.actualButton.accessibilityLabel = @"share button";
+    
+    return shareButton;
+}
+
 + (SZActionButton*)viewsButton {
     SZActionButton *viewsButton = [SZActionButton actionButtonWithIcon:[UIImage imageNamed:@"action-bar-icon-views.png"] title:nil];
     

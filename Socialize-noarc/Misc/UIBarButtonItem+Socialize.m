@@ -27,17 +27,40 @@
 }
 
 + (UIBarButtonItem*)redSocializeBarButtonWithTitle:(NSString*)title handler:(void(^)(id sender))handler {
-    UIButton *button = [UIButton redSocializeNavBarButtonWithTitle:title];
-    [button bk_addEventHandler:handler forControlEvents:UIControlEventTouchUpInside];
-    
-    return [[[UIBarButtonItem alloc] initWithCustomView:button] autorelease];
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+        UIButton *button = [UIButton redSocializeNavBarButtonWithTitle:title];
+        [button bk_addEventHandler:handler forControlEvents:UIControlEventTouchUpInside];
+        
+        return [[[UIBarButtonItem alloc] initWithCustomView:button] autorelease];
+    }
+    else {
+           UIButton *button = [UIButton redSocializeNavBarButtonWithTitle:title];
+            [button bk_addEventHandler:handler forControlEvents:UIControlEventTouchUpInside];
+            [[button titleLabel] setFont:[UIFont fontWithName:@"Lato-Bold" size:14.0]];
+            [button setContentEdgeInsets:UIEdgeInsetsMake(0.0, -20.0, 0.0, 0.0)];
+        
+            UIBarButtonItem *barButton = [[[UIBarButtonItem alloc] initWithCustomView:button] autorelease];
+        
+        return barButton;
+    }
 }
 
 + (UIBarButtonItem*)blueSocializeBarButtonWithTitle:(NSString*)title handler:(void(^)(id sender))handler {
-    UIButton *button = [UIButton blueSocializeNavBarButtonWithTitle:title];
-    [button bk_addEventHandler:handler forControlEvents:UIControlEventTouchUpInside];
-    
-    return [[[UIBarButtonItem alloc] initWithCustomView:button] autorelease];
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+        
+        UIButton *button = [UIButton blueSocializeNavBarButtonWithTitle:title];
+        [button bk_addEventHandler:handler forControlEvents:UIControlEventTouchUpInside];
+        return [[[UIBarButtonItem alloc] initWithCustomView:button] autorelease];
+    }
+    else {
+           UIButton *button = [UIButton blueSocializeNavBarButtonWithTitle:title];
+        [[button titleLabel] setFont:[UIFont fontWithName:@"Lato-Bold" size:14.0]];
+        [button bk_addEventHandler:handler forControlEvents:UIControlEventTouchUpInside];
+        [button setContentEdgeInsets:UIEdgeInsetsMake(0.0, 20.0, 0.0, 0.0)];
+        UIBarButtonItem *barButton = [[[UIBarButtonItem alloc] initWithCustomView:button] autorelease];
+        
+        return barButton;
+    }
 }
 
 

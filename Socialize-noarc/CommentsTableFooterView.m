@@ -16,7 +16,9 @@
 @synthesize backgroundImageView;
 @synthesize searchBarImageView;
 @synthesize addCommentButton;
+@synthesize likeButton;
 @synthesize addCommentView = addCommentView_;
+@synthesize addCommentLabel = addCommentLabel_;
 @synthesize subscribedButton = _subscribedButton;
 
 //class cluster for iOS 6 compatibility
@@ -44,6 +46,10 @@
     return [UIImage imageNamed:@"comment-bg-ios7.png"];
 }
 
+- (void) viewDidLoad {
+    [[self likeButton] setHidden:TRUE];
+    
+}
 - (void)hideSubscribedButton {
     self.subscribedButton.hidden = YES;
     
