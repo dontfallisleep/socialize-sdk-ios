@@ -34,7 +34,7 @@
 - (void)populateFullUser:(id<SZFullUser>)fullUser {
     [fullUser setFirstName:self.firstName];
     [fullUser setLastName:self.lastName];
-    [fullUser setDescription:self.bio];
+    [fullUser setDesc:self.bio];
     [fullUser setMeta:self.meta];
 }
 

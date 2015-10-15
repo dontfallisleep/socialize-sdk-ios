@@ -145,7 +145,8 @@ tokenRequest = _tokenRequest;
                                   expectedJSONFormat:expectedJSONFormat
                                   params:params]
                                  autorelease];
-    return request;
+   request.secure = YES;
+   return request;
 }
 
 + (id)secureRequestWithHttpMethod:(NSString *) httpMethod

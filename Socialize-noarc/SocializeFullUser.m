@@ -35,7 +35,7 @@
 @synthesize userName = _userName;
 @synthesize displayName;
 @synthesize smallImageUrl = _smallInageUrl;
-@synthesize description = _description;
+@synthesize desc = _desc;
 @synthesize location = _location;
 @synthesize medium_image_uri = _medium_image_uri;
 @synthesize large_image_uri = _large_image_uri;
@@ -59,7 +59,7 @@
     copy.lastName = self.lastName;
     copy.userName = self.userName;
     copy.smallImageUrl = self.smallImageUrl;
-    copy.description = self.description;
+    copy.desc = self.desc;
     copy.location = self.location;
     copy.medium_image_uri = self.medium_image_uri;
     copy.large_image_uri = self.large_image_uri;
@@ -80,7 +80,7 @@
     [_lastName release];
     [_userName release];
     [_smallInageUrl release];
-    [_description release];
+    [_desc release];
     [_location release];
     [_medium_image_uri release];
     [_large_image_uri release];

@@ -46,8 +46,8 @@
 
 -(NSString*) displayName;
 
--(void) setDescription: (NSString*)description;
--(NSString*)description;
+-(void) setDesc: (NSString*)desc;
+-(NSString*)desc;
 
 -(void) setSex: (NSString*)sex;
 -(NSString*)sex;
@@ -91,7 +91,7 @@
     NSString* _firstName;
     NSString* _lastName;
     NSString* _userName;    
-    NSString* _description;
+    NSString* _desc;
     NSString* _sex;
     NSString* _location;
     NSString* _smallInageUrl;
@@ -111,7 +111,7 @@
 @property (nonatomic, copy) NSString* lastName;
 @property (nonatomic, copy) NSString* userName;
 @property (nonatomic, readonly) NSString* displayName;
-@property (nonatomic, copy) NSString* description;
+@property (nonatomic, copy) NSString* desc;
 @property (nonatomic, copy) NSString* sex;
 @property (nonatomic, copy) NSString* location;
 @property (nonatomic, copy) NSString* smallImageUrl;
